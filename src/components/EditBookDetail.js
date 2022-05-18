@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export const EditBookDetail = () => {
     const id = useParams().id
@@ -11,6 +11,7 @@ export const EditBookDetail = () => {
     const [returnDate, setreturnDate] = useState(book.returnDate)
     const [borrowedBy, setborrowedBy] = useState(book.borrowedBy)
     const [students, setstudents] = useState([])
+    const navigate = useNavigate()
 
     const getStudents = () =>{
         axios.get('http://localhost:8080/students').then(res=>{
@@ -46,6 +47,7 @@ export const EditBookDetail = () => {
         }
         axios.put(`http://localhost:8080/books/${id}`,data).then(res=>{
             console.log(res.data)
+            navigate('/books')
         }).catch(err=>{
             console.log(err)
         })
